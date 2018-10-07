@@ -1,0 +1,66 @@
+Walker w;
+int restartTime = 5;
+//4 players in a square around a flat screen table or led board
+//(or iPad on a stand projected down onto a mirror) 
+//Each player takes a turn.
+//Each player puts out a quarter in front of them for each turn. 
+//This quarter can be taken by another player, taken back by the owner, or put into the pot.
+//Each player in turn rolls the dice to weight the walker in their direction.
+//The Walker will run a full round at each turn to determine the round winner.
+
+//depending on how high a player rolls, the walker will be weighted to their side of the square
+//if a player rolls a SNAKE EYES at any time...
+//They toss their quarter into the pot.
+// the screen will blink and say "awwwww man"
+//use camera to recognize dice in a ring
+//you get three rolls to weight the circle to come in your direction/color  
+//2 dice, three rolls if wanted, 
+//the higher the number, the higher probability that their color is chosen by the walker
+//if you get doubles first, you can take your quarter back and everyone throws theirs into the pot
+//or you can roll again to increase your changes of influencing the walker 
+//if you get doubles again, you can take the pot
+//if you get exactly the same doubles, you take the pot
+//if you get snake eyes after a double, then you have to pay the pot!
+//doubles will x 2 your total in the weighting of the walker
+// so if you roll a 2 and a 4, and then a 1 and a 3, your total weighting is 10
+//but if you roll a 2 and a 2 (doubles) and then decide to roll again, a 1 and a 3, your total weighting is 20.
+//if you roll doubles twice, the you get the pot, no walker needed.  
+//Or after two doubles, you can decide to take of the game by running the walker at random - whoever it lands on pays the pot
+//if you don't get it
+// you can stop after two rolls if you get doubles, like so if you get 6 total twice
+//you can try for a third roll to beat the total of the first two rolls
+//and if you can top the total of the first two rolls, you will win the pot.
+//so you run the walker once you've rolled three time - should you roll 3x or 2x?
+//if you lose, everyone else gets to keep their quarter and yours goes in the ring
+//if you win, you get everyone's quarter and the pot
+//play on an iPad, use the iPad to read the dice?  iPad over a mirror, 
+//projected down onto the board 
+
+void setup () {
+  size (800, 800);
+  w = new Walker();
+  background(255);
+  textAlign(CENTER);
+}
+
+void draw () {
+  borders();
+  boolean run = true;
+
+  if (w.x >= width-(width/10) || w.x <= (width/10)) {
+    run = !run;
+  }
+  if (w.y >= height-(height/10) || w.y <= (height/10)) {
+    run = !run;
+  }
+
+  if (run) {
+    w.step();
+    //w.cheat();
+    w.display();
+  } else if (!run) {
+    checkWinner();
+    restartGame();
+    
+    }
+  }
